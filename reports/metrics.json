@@ -1,0 +1,21 @@
+{
+  "best_model": "Prophet",
+  "horizon_test_days": 90,
+  "comparison": {
+    "Seasonal-Naive": {
+      "MAE": 4028.11,
+      "RMSE": 5178.3,
+      "MAPE": 12.47
+    },
+    "SARIMA": {
+      "MAE": 7568.54,
+      "RMSE": 9297.33,
+      "MAPE": 21.2
+    },
+    "Prophet": {
+      "MAE": 2612.52,
+      "RMSE": 3368.33,
+      "MAPE": 7.86
+    }
+  }
+}

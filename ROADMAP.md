@@ -12,12 +12,12 @@
 
 | Fase | Componente | Estado |
 |---|---|---|
-| 0 | Setup del entorno | ⬜ Pendiente |
-| 1 | EDA & Análisis temporal | ⬜ Pendiente |
-| 2 | Descomposición de la serie | ⬜ Pendiente |
-| 3 | Modelado — ARIMA & Prophet | ⬜ Pendiente |
-| 4 | (Opcional) LSTM — modelo avanzado | ⬜ Pendiente |
-| 5 | Cierre de portfolio | ⬜ Pendiente |
+| 0 | Setup del entorno | ✅ Completado |
+| 1 | EDA & Análisis temporal | ✅ Completado |
+| 2 | Descomposición de la serie | ✅ Completado |
+| 3 | Modelado — ARIMA & Prophet | ✅ Completado (+ baseline seasonal-naive) |
+| 4 | (Opcional) LSTM — modelo avanzado | ⏭️ Opcional — omitida |
+| 5 | Cierre de portfolio | ✅ Completado |
 
 Leyenda: ⬜ Pendiente · 🔄 En progreso · ✅ Completado
 
