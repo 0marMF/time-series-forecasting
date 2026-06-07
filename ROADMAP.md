@@ -208,6 +208,35 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 
 ---
 
+## 🚀 De análisis a proyecto de Ciencia de Datos (Track DS — planificado)
+
+Un forecast de verdad no es un gráfico bonito de una sola vez: es algo que se re-entrena, se
+valida con el tiempo y se puede consultar. Eso es lo que falta para que sea un proyecto de DS.
+
+**Código modular → `src/`**
+- [ ] `src/data.py` (carga + resample + huecos), `src/features.py` (calendario, Fourier),
+      `src/models.py` (baseline, SARIMA/SARIMAX, Prophet), `src/backtest.py`.
+- [ ] `config.yaml` (serie, horizonte, órdenes) + `python -m src.pipeline`.
+
+**Backtesting como código (no un solo split)**
+- [ ] Framework **walk-forward** reutilizable que evalúa en varias ventanas y reporta media ± desv
+      de MAE/RMSE/MAPE. Es lo que da credibilidad real a un forecast.
+
+**Servir el pronóstico**
+- [ ] CLI/endpoint `forecast(days=30)` que devuelve el pronóstico con su intervalo.
+- [ ] Concepto de **re-entrenamiento programado** (GitHub Actions / cron) — los datos crecen.
+
+**Monitoreo y documentación**
+- [ ] Seguir el **error de pronóstico en el tiempo** (si se dispara, el modelo se quedó viejo).
+- [ ] Tests: continuidad temporal, sin fugas de futuro en el split, formato del output.
+- [ ] Model card con supuestos (estacionalidad), límites y cuándo NO confiar en el forecast.
+- [ ] CI con `pytest`.
+
+> **Estilo:** docs y comentarios humanos. Explicar *por qué* este orden de ARIMA, *por qué*
+> diario y no horario, qué se intentó y qué no funcionó — como lo contaría un analista a otro.
+
+---
+
 ## Orden de desarrollo
 
 ```
