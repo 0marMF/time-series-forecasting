@@ -21,6 +21,26 @@
 
 Leyenda: ⬜ Pendiente · 🔄 En progreso · ✅ Completado
 
+> **v1.0.0 completo.** Ver abajo **Mejoras planificadas (v1.1)** — SARIMA quedó por debajo del
+> baseline por una limitación nuestra (faltó estacionalidad anual), y falta evaluación robusta.
+
+---
+
+## 🔄 Mejoras planificadas (v1.1) — auditoría 2026-06-06
+
+### 🔴 P1 — Comparación justa para SARIMA (estacionalidad anual)
+SARIMA usó solo estacionalidad semanal (m=7) → no captura el ciclo anual y quedó **peor que el
+baseline**. Es una limitación del montaje, no del método.
+- [ ] **SARIMAX con términos de Fourier** para la estacionalidad anual; recomparar vs Prophet/baseline
+- [ ] Reflejar la comparación corregida en `metrics.json` y `09_model_comparison.png`
+
+### 🟠 P2 — Evaluación robusta y stretch
+- [ ] **Backtesting / walk-forward** en varias ventanas (hoy es un único test de 90 días)
+- [ ] (Stretch) Pronóstico de la **serie horaria** con su ciclo diario, no solo la diaria
+
+**Por qué:** el roadmap compara modelos; darle a ARIMA su estacionalidad anual y validar con
+walk-forward hace la comparación honesta y la evaluación creíble.
+
 ---
 
 ## 🔄 Backlog de mejoras — v1.1.0 *(planificado, aún sin implementar)*
