@@ -23,6 +23,16 @@ Leyenda: ⬜ Pendiente · 🔄 En progreso · ✅ Completado
 
 ---
 
+## 🔄 Backlog de mejoras — v1.1.0 *(planificado, aún sin implementar)*
+
+> Derivado de la revisión de calidad (2026-06-06). SARIMA quedó infravalorado frente a Prophet.
+
+- [ ] **SARIMA con estacionalidad anual (términos de Fourier / SARIMAX con exógenas)** — comparación justa; hoy SARIMA con `m=7` ignora el ciclo anual y queda incluso peor que el baseline.
+- [ ] **Backtesting / validación walk-forward** en varias ventanas — no un único test de 90 días.
+- [ ] *(stretch)* **Forecasting horario** (no solo diario), aprovechando el fuerte ciclo intradía.
+
+---
+
 ## Fase 0 — Setup del entorno
 
 - [ ] Descargar dataset y colocar en `data/`
