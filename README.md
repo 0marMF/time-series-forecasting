@@ -77,6 +77,18 @@ semana) y anual (picos de verano e invierno por climatización).
 
 ---
 
+## Servir el pronóstico
+
+El modelo Prophet entrenado se persiste (`src/forecast_model.json`); el CLI y la API lo cargan y
+proyectan a futuro sin reentrenar.
+
+```bash
+python -m src.forecast --days 30        # CLI: pronóstico horario de 30 días
+uvicorn src.api:app --reload            # API: GET /forecast?days=N  (docs en /docs)
+```
+
+---
+
 ## Estructura
 
 ```

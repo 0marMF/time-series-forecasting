@@ -45,8 +45,10 @@ def run(cfg: dict | None = None) -> dict:
     best = min(res, key=lambda k: res[k]["rmse"])
     print(f"Mejor modelo (menor RMSE): {best}")
 
-    # 4) Persistir Prophet + métricas + experimento
-    _save_prophet(prophet, cfg)
+    # 4) Modelo para SERVIR: Prophet reentrenado con TODA la ventana (train+test), para que el
+    # pronóstico arranque desde el último dato real y no desde el final del train.
+    served = models.fit_prophet(data.recent_window(s, cfg))
+    _save_prophet(served, cfg)
     _write_metrics(res, best, cfg)
     _log_experiment(res, cfg)
     return {"results": res, "best": best}

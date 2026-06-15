@@ -222,9 +222,10 @@ valida con el tiempo y se puede consultar. Eso es lo que falta para que sea un p
 - [ ] Framework **walk-forward** reutilizable que evalúa en varias ventanas y reporta media ± desv
       de MAE/RMSE/MAPE. Es lo que da credibilidad real a un forecast.
 
-**Servir el pronóstico**
-- [ ] CLI/endpoint `forecast(days=30)` que devuelve el pronóstico con su intervalo.
-- [ ] Concepto de **re-entrenamiento programado** (GitHub Actions / cron) — los datos crecen.
+**Servir el pronóstico** — hecho (CP4)
+- [x] CLI `python -m src.forecast --days N` y API FastAPI `GET /forecast?days=N` (`src/forecast.py`,
+      `src/api.py`); cargan el Prophet persistido (entrenado con toda la ventana) sin reentrenar.
+- [ ] Concepto de **re-entrenamiento programado** (GitHub Actions / cron) — pendiente (nota en CP6).
 
 **Monitoreo y documentación**
 - [ ] Seguir el **error de pronóstico en el tiempo** (si se dispara, el modelo se quedó viejo).
