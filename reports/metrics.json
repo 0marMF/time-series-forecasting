@@ -1,21 +1,22 @@
 {
   "best_model": "Prophet",
-  "horizon_test_days": 90,
+  "test_hours": 336,
+  "train_hours": 26280,
   "comparison": {
     "Seasonal-Naive": {
-      "MAE": 4028.11,
-      "RMSE": 5178.3,
-      "MAPE": 12.47
-    },
-    "SARIMA": {
-      "MAE": 7568.54,
-      "RMSE": 9297.33,
-      "MAPE": 21.2
+      "mae": 3276.637,
+      "rmse": 4244.873,
+      "mape": 9.209
     },
     "Prophet": {
-      "MAE": 2612.52,
-      "RMSE": 3368.33,
-      "MAPE": 7.86
+      "mae": 3531.649,
+      "rmse": 4237.546,
+      "mape": 10.917
     }
+  },
+  "best": {
+    "mae": 3531.649,
+    "rmse": 4237.546,
+    "mape": 10.917
   }
 }

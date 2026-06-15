@@ -1,0 +1,3 @@
+timestamp,model,mae,rmse,mape
+2026-06-13T19:46:05,Seasonal-Naive,3276.64,4244.87,9.209
+2026-06-13T19:46:05,Prophet,3531.65,4237.55,10.917

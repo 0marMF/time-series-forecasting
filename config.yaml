@@ -1,0 +1,33 @@
+# Configuración central del forecasting de demanda eléctrica (PJM East, horario).
+
+seed: 42
+
+data:
+  raw_csv: data/PJME_hourly.csv
+  datetime_col: Datetime
+  value_col: PJME_MW
+  model: src/forecast_model.json       # modelo Prophet serializado (lo carga la API)
+
+paths:
+  reports: reports
+  metrics: reports/metrics.json
+  experiments: reports/experiments.csv
+
+# Trabajamos en horario. La serie completa son ~16 años (145k horas): entrenar SARIMA sobre todo
+# eso es inviable, así que usamos una ventana reciente lo bastante larga para ver el ciclo anual.
+window:
+  train_hours: 26280       # ~3 años de historia para entrenar
+  test_hours: 336          # 14 días de test (held-out)
+
+forecast:
+  horizon_hours: 720       # pronóstico a futuro de 30 días
+
+# Términos de Fourier para la estacionalidad múltiple (los usa SARIMAX en el CP2; Prophet la
+# modela de forma nativa). period en horas: diaria 24, semanal 168, anual 8766.
+fourier:
+  daily:  {period: 24,   order: 5}
+  weekly: {period: 168,  order: 3}
+  yearly: {period: 8766, order: 4}
+
+baseline:
+  naive_period_hours: 168  # naive estacional: misma hora de la semana pasada

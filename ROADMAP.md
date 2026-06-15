@@ -1,9 +1,9 @@
 # Roadmap — Time Series Forecasting
 
-**Proyecto de portfolio:** Omar Mora Flores  
+**Proyecto de portfolio:** Omar Mora Flores
 **Objetivo:** Predecir tendencias futuras usando datos históricos, demostrando habilidades en análisis de series de tiempo, detección de estacionalidad y modelos de forecasting.
 
-**Caso de uso sugerido:** Pronóstico de demanda de energía eléctrica (dataset público disponible en Kaggle)  
+**Caso de uso sugerido:** Pronóstico de demanda de energía eléctrica (dataset público disponible en Kaggle)
 **Dataset recomendado:** [Hourly Energy Consumption — Kaggle](https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption) *(o ventas, tráfico web, según preferencia)*
 
 ---
@@ -12,29 +12,29 @@
 
 | Fase | Componente | Estado |
 |---|---|---|
-| 0 | Setup del entorno | ✅ Completado |
-| 1 | EDA & Análisis temporal | ✅ Completado |
-| 2 | Descomposición de la serie | ✅ Completado |
-| 3 | Modelado — ARIMA & Prophet | ✅ Completado (+ baseline seasonal-naive) |
-| 4 | (Opcional) LSTM — modelo avanzado | ⏭️ Opcional — omitida |
-| 5 | Cierre de portfolio | ✅ Completado |
+| 0 | Setup del entorno | Completado |
+| 1 | EDA & Análisis temporal | Completado |
+| 2 | Descomposición de la serie | Completado |
+| 3 | Modelado — ARIMA & Prophet | Completado (+ baseline seasonal-naive) |
+| 4 | (Opcional) LSTM — modelo avanzado | Opcional — omitida |
+| 5 | Cierre de portfolio | Completado |
 
-Leyenda: ⬜ Pendiente · 🔄 En progreso · ✅ Completado
+Leyenda: Pendiente · En progreso · Completado
 
 > **v1.0.0 completo.** Ver abajo **Mejoras planificadas (v1.1)** — SARIMA quedó por debajo del
 > baseline por una limitación nuestra (faltó estacionalidad anual), y falta evaluación robusta.
 
 ---
 
-## 🔄 Mejoras planificadas (v1.1) — auditoría 2026-06-06
+## Mejoras planificadas (v1.1) — auditoría 2026-06-06
 
-### 🔴 P1 — Comparación justa para SARIMA (estacionalidad anual)
+### P1 — Comparación justa para SARIMA (estacionalidad anual)
 SARIMA usó solo estacionalidad semanal (m=7) → no captura el ciclo anual y quedó **peor que el
 baseline**. Es una limitación del montaje, no del método.
 - [ ] **SARIMAX con términos de Fourier** para la estacionalidad anual; recomparar vs Prophet/baseline
 - [ ] Reflejar la comparación corregida en `metrics.json` y `09_model_comparison.png`
 
-### 🟠 P2 — Evaluación robusta y stretch
+### P2 — Evaluación robusta y stretch
 - [ ] **Backtesting / walk-forward** en varias ventanas (hoy es un único test de 90 días)
 - [ ] (Stretch) Pronóstico de la **serie horaria** con su ciclo diario, no solo la diaria
 
@@ -43,7 +43,7 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 
 ---
 
-## 🔄 Backlog de mejoras — v1.1.0 *(planificado, aún sin implementar)*
+## Backlog de mejoras — v1.1.0 *(planificado, aún sin implementar)*
 
 > Derivado de la revisión de calidad (2026-06-06). SARIMA quedó infravalorado frente a Prophet.
 
@@ -68,7 +68,7 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 
 ## Fase 1 — EDA & Análisis temporal
 
-**Archivo:** `notebooks/01_EDA.ipynb`  
+**Archivo:** `notebooks/01_EDA.ipynb`
 **Pregunta central:** ¿Qué patrones, tendencias y estacionalidades tiene la serie?
 
 ### Secciones
@@ -179,7 +179,7 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 
 ## Fase 4 — (Opcional) LSTM — Modelo Avanzado
 
-**Archivo:** `notebooks/04_lstm.ipynb`  
+**Archivo:** `notebooks/04_lstm.ipynb`
 **Requerimientos adicionales:** `tensorflow` o `pytorch`
 
 ### Tareas
@@ -208,7 +208,7 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 
 ---
 
-## 🚀 De análisis a proyecto de Ciencia de Datos (Track DS — planificado)
+## De análisis a proyecto de Ciencia de Datos (Track DS — planificado)
 
 Un forecast de verdad no es un gráfico bonito de una sola vez: es algo que se re-entrena, se
 valida con el tiempo y se puede consultar. Eso es lo que falta para que sea un proyecto de DS.

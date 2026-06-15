@@ -1,6 +1,7 @@
 # Datos (no subir — descargar desde Kaggle, ver ROADMAP/README)
 data/
 *.csv
+!reports/experiments.csv
 *.zip
 *.pkl
 *.parquet
@@ -14,8 +15,8 @@ __pycache__/
 venv/
 env/
 
-# Modelos serializados
-src/*.pkl
+# Temporales de build
+notebooks/_build_*.py
 
 # Sistema
 .DS_Store

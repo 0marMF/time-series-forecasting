@@ -1,4 +1,4 @@
-# ⏱️ Time Series Forecasting — Demanda Eléctrica (PJM)
+# Time Series Forecasting — Demanda Eléctrica (PJM)
 
 > **Pronosticar la demanda eléctrica horaria con un MAPE de 7.9% (Prophet)**
 > *EDA temporal, descomposición STL y forecasting con baseline, SARIMA y Prophet*
@@ -9,7 +9,7 @@
 
 ---
 
-## 📌 Objetivo
+## Objetivo
 
 Modelar y pronosticar la demanda eléctrica de **PJM East (PJME)** — **145,366 horas de
 2002 a 2018** (~16.6 años) — caracterizando su estacionalidad y comparando modelos contra un
@@ -17,13 +17,13 @@ baseline honesto.
 
 ---
 
-## 🎯 Resultados (horizonte de test: 90 días)
+## Resultados (horizonte de test: 90 días)
 
 | Modelo | MAE (MW) | RMSE (MW) | MAPE |
 |---|---|---|---|
 | Seasonal-Naive (baseline) | 4,028 | 5,178 | 12.5 % |
 | SARIMA | 7,569 | 9,297 | 21.2 % |
-| **Prophet** ✅ | **2,613** | **3,368** | **7.9 %** |
+| **Prophet** | **2,613** | **3,368** | **7.9 %** |
 
 > **Hallazgo clave:** solo **Prophet supera al baseline**. SARIMA (estacionalidad semanal sobre
 > 2 años) **queda por debajo del seasonal-naive** porque no captura el ciclo **anual** en un
@@ -31,7 +31,7 @@ baseline honesto.
 
 ---
 
-## 🔬 Metodología
+## Metodología
 
 1. **EDA temporal** (`01_EDA.ipynb`) — serie completa, estacionalidad (hora/día/mes), tendencia, ADF.
 2. **Descomposición** (`02_decomposition.ipynb`) — STL (tendencia+estacional+residuo), ADF +
@@ -44,7 +44,7 @@ baseline honesto.
 
 ---
 
-## 📈 Estacionalidad y pronóstico
+## Estacionalidad y pronóstico
 
 La demanda tiene **triple estacionalidad**: diaria (pico de tarde), semanal (menor en fin de
 semana) y anual (picos de verano e invierno por climatización).
@@ -53,7 +53,7 @@ semana) y anual (picos de verano e invierno por climatización).
 
 ---
 
-## 🏗️ Estructura
+## Estructura
 
 ```
 time-series-forecasting/
@@ -70,7 +70,7 @@ time-series-forecasting/
 
 ---
 
-## 🚀 Cómo ejecutar
+## Cómo ejecutar
 
 ```bash
 pip install -r requirements.txt
@@ -82,11 +82,11 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/03_modeling.ipynb
 > Dataset: [Hourly Energy Consumption — Kaggle](https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption)
 > (serie `PJME_hourly.csv`; no se versiona). En Windows, Prophet requiere `pip install prophet`.
 
-> 📄 Detalle de detecciones y aprendizajes en [`HALLAZGOS.md`](HALLAZGOS.md).
+> Detalle de detecciones y aprendizajes en [`HALLAZGOS.md`](HALLAZGOS.md).
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
 **Omar Mora Flores** · Data Analyst & ML Engineer
-📧 omar13mor@gmail.com · 🔗 [linkedin.com/in/omar-mora-flores](https://linkedin.com/in/omar-mora-flores)
+ omar13mor@gmail.com · [linkedin.com/in/omar-mora-flores](https://linkedin.com/in/omar-mora-flores)
