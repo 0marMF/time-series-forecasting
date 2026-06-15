@@ -33,6 +33,25 @@ baseline honesto.
 
 ---
 
+## Backtesting walk-forward
+
+Una sola ventana engaña: en el test de 14 días el naive parecía el mejor. Repitiendo la
+evaluación en **4 ventanas** consecutivas y promediando, el ranking se ordena bien:
+
+| Modelo | MAPE medio | desviación |
+|---|---|---|
+| Seasonal-Naive | 13.9 % | 3.6 |
+| SARIMAX + Fourier | 13.7 % | 3.6 |
+| **Prophet** | **13.0 %** | **2.3** |
+
+![Backtesting walk-forward](reports/11_backtesting.png)
+
+**Prophet gana de forma robusta**: el MAPE medio más bajo y, sobre todo, la **menor varianza**
+(más consistente entre ventanas). Por eso es el modelo que se sirve. Moraleja: un único split
+puede señalar al modelo equivocado — por eso backtesteamos.
+
+---
+
 ## Metodología
 
 1. **EDA temporal** (`01_EDA.ipynb`) — serie completa, estacionalidad (hora/día/mes), tendencia, ADF.
@@ -41,6 +60,8 @@ baseline honesto.
 3. **Modelado horario** (`03_modeling.ipynb`) — **baseline naive-semanal**, **SARIMAX + Fourier**
    (estacionalidad múltiple como regresores) y **Prophet**; comparación MAE/RMSE/MAPE y
    **pronóstico a 30 días** (720 h). El pipeline reproducible: `python -m src.pipeline`.
+4. **Backtesting walk-forward** (`04_backtesting.ipynb`) — evaluación en varias ventanas
+   (media ± desviación) para un ranking robusto.
 
 > La Fase 4 (LSTM) del roadmap es opcional y se omite: baseline + SARIMAX + Prophet ya constituyen
 > un pipeline de forecasting sólido y reproducible.
@@ -64,8 +85,8 @@ time-series-forecasting/
 ├── data/                         # CSVs PJM (no versionado)
 ├── src/                          # data, features (Fourier), models, pipeline
 │   └── forecast_model.json       # modelo Prophet persistido (lo carga la API)
-├── notebooks/                    # 01_EDA, 02_decomposition, 03_modeling (importan src/)
-├── reports/                      # figuras + metrics.json + experiments.csv
+├── notebooks/                    # 01_EDA, 02_decomposition, 03_modeling, 04_backtesting (importan src/)
+├── reports/                      # figuras + metrics.json + backtest_metrics.json + experiments.csv
 ├── HALLAZGOS.md   README.md   ROADMAP.md
 ```
 

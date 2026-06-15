@@ -41,7 +41,24 @@ complejidad, quedó **por debajo** del baseline en este horizonte.
    SARIMA lo que el `seasonal_order` semanal no podía. Comparación por fin justa.
 3. **Prophet queda a la par** (mejor RMSE, 4,238) gracias a su estacionalidad nativa.
 4. Una sola ventana de 14 días es **ruidosa**: el ranking real exige **backtesting walk-forward**
-   (varias ventanas), que es el siguiente paso.
+   (varias ventanas). Ver abajo.
+
+---
+
+## 📊 Backtesting walk-forward (Fase 3b)
+
+Repitiendo la evaluación en **4 ventanas** y promediando, el ranking cambia respecto a la ventana
+única:
+
+| Modelo | MAPE medio | desviación |
+|---|---|---|
+| Seasonal-Naive | 13.9 % | 3.6 |
+| SARIMAX + Fourier | 13.7 % | 3.6 |
+| **Prophet** | **13.0 %** | **2.3** |
+
+- **Prophet gana de forma robusta**: menor MAPE medio y, sobre todo, **menor varianza** (más
+  consistente). En la ventana única (CP2) el naive parecía el mejor — el backtesting lo desmiente.
+- Moraleja: **un solo split puede señalar al modelo equivocado**. Por eso se backtestea.
 
 ---
 
@@ -67,7 +84,7 @@ complejidad, quedó **por debajo** del baseline en este horizonte.
 
 ## ⚠️ Limitaciones y próximos pasos
 
-- [ ] **Backtesting / validación walk-forward** en varias ventanas (no un único split de 90 días).
+- [x] **Backtesting / validación walk-forward** en varias ventanas (hecho: 4 ventanas, Prophet robusto).
 - [ ] SARIMA con estacionalidad anual (vía variables de Fourier o SARIMAX con exógenas) para una
       comparación más justa frente a Prophet.
 - [ ] Incorporar **variables exógenas** (temperatura, festivos) — principal driver de la demanda.

@@ -48,7 +48,7 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 > Derivado de la revisión de calidad (2026-06-06). SARIMA quedó infravalorado frente a Prophet.
 
 - [x] **SARIMAX + Fourier (estacionalidad múltiple)** — `src/models.py`; ya competitivo (~11% MAPE) en lugar del 21% del v1.0.0. Comparación justa.
-- [ ] **Backtesting / validación walk-forward** en varias ventanas (CP3) — un único test es ruidoso.
+- [x] **Backtesting / validación walk-forward** (CP3) — 4 ventanas; Prophet robusto (MAPE 13.0% ± 2.3, menor varianza). El naive parecía mejor en una sola ventana: el backtesting lo desmiente.
 - [x] **Forecasting horario** (no solo diario) — pipeline y modelos ahora trabajan en horario.
 
 ---
