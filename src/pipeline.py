@@ -29,7 +29,12 @@ def run(cfg: dict | None = None) -> dict:
     snaive = models.seasonal_naive(s, test.index, cfg["baseline"]["naive_period_hours"])
     res["Seasonal-Naive"] = models.metrics(test, snaive)
 
-    # 3) Prophet (estacionalidad diaria + semanal + anual)
+    # 3) SARIMAX con Fourier (estacionalidad múltiple como regresores)
+    sarimax, origin = models.fit_sarimax_fourier(train, cfg)
+    fc_sx = models.sarimax_predict(sarimax, origin, test.index, cfg)
+    res["SARIMAX-Fourier"] = models.metrics(test, fc_sx)
+
+    # 4) Prophet (estacionalidad diaria + semanal + anual)
     prophet = models.fit_prophet(train)
     fc = models.prophet_predict(prophet, test.index)
     res["Prophet"] = models.metrics(test, fc)

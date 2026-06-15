@@ -47,9 +47,9 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 
 > Derivado de la revisión de calidad (2026-06-06). SARIMA quedó infravalorado frente a Prophet.
 
-- [ ] **SARIMA con estacionalidad anual (términos de Fourier / SARIMAX con exógenas)** — comparación justa; hoy SARIMA con `m=7` ignora el ciclo anual y queda incluso peor que el baseline.
-- [ ] **Backtesting / validación walk-forward** en varias ventanas — no un único test de 90 días.
-- [ ] *(stretch)* **Forecasting horario** (no solo diario), aprovechando el fuerte ciclo intradía.
+- [x] **SARIMAX + Fourier (estacionalidad múltiple)** — `src/models.py`; ya competitivo (~11% MAPE) en lugar del 21% del v1.0.0. Comparación justa.
+- [ ] **Backtesting / validación walk-forward** en varias ventanas (CP3) — un único test es ruidoso.
+- [x] **Forecasting horario** (no solo diario) — pipeline y modelos ahora trabajan en horario.
 
 ---
 

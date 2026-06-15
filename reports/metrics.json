@@ -8,6 +8,11 @@
       "rmse": 4244.873,
       "mape": 9.209
     },
+    "SARIMAX-Fourier": {
+      "mae": 4285.761,
+      "rmse": 5331.212,
+      "mape": 11.093
+    },
     "Prophet": {
       "mae": 3531.649,
       "rmse": 4237.546,

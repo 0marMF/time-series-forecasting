@@ -29,5 +29,9 @@ fourier:
   weekly: {period: 168,  order: 3}
   yearly: {period: 8766, order: 4}
 
+sarimax:
+  order: [2, 1, 1]         # orden no estacional; la estacionalidad va por Fourier
+  maxiter: 50              # cap de iteraciones del MLE para que no se eternice
+
 baseline:
   naive_period_hours: 168  # naive estacional: misma hora de la semana pasada

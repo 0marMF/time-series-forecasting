@@ -26,19 +26,22 @@ complejidad, quedó **por debajo** del baseline en este horizonte.
 
 ---
 
-## 🔮 Detecciones del modelado (Fase 3) — horizonte 90 días
+## 🔮 Detecciones del modelado (Fase 3) — forecasting horario, test 336 h
 
 | Modelo | MAE | RMSE | MAPE |
 |---|---|---|---|
-| Seasonal-Naive (baseline) | 4,028 | 5,178 | 12.5 % |
-| SARIMA | 7,569 | 9,297 | 21.2 % |
-| **Prophet** ✅ | **2,613** | **3,368** | **7.9 %** |
+| Seasonal-Naive (baseline) | 3,277 | 4,245 | 9.2 % |
+| SARIMAX + Fourier | 4,286 | 5,331 | 11.1 % |
+| Prophet | 3,532 | 4,238 | 10.9 % |
 
-1. **Prophet gana** porque modela de forma nativa la estacionalidad **anual + semanal**.
-2. **SARIMA queda por debajo del baseline:** con estacionalidad solo semanal (m=7) sobre 2 años,
-   no captura el ciclo anual y se desvía en 90 días. *Más complejidad ≠ mejor modelo.*
-3. El **baseline estacional-naive** (demanda del mismo día del año anterior) es sorprendentemente
-   competitivo — la vara de medir correcta.
+1. **El naive semanal es un baseline durísimo** en horario: copiar la misma hora de la semana
+   pasada acierta mucho a corto plazo. La vara de medir correcta.
+2. **SARIMAX + Fourier ya es competitivo** (~11% MAPE), no el desastre del v1.0.0 (21% en diario):
+   meter la estacionalidad múltiple (diaria/semanal/anual) como **regresores de Fourier** le da a
+   SARIMA lo que el `seasonal_order` semanal no podía. Comparación por fin justa.
+3. **Prophet queda a la par** (mejor RMSE, 4,238) gracias a su estacionalidad nativa.
+4. Una sola ventana de 14 días es **ruidosa**: el ranking real exige **backtesting walk-forward**
+   (varias ventanas), que es el siguiente paso.
 
 ---
 

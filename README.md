@@ -1,7 +1,7 @@
 # Time Series Forecasting — Demanda Eléctrica (PJM)
 
-> **Pronosticar la demanda eléctrica horaria con un MAPE de 7.9% (Prophet)**
-> *EDA temporal, descomposición STL y forecasting con baseline, SARIMA y Prophet*
+> **Forecasting horario de demanda eléctrica: baseline, SARIMAX-Fourier y Prophet**
+> *EDA temporal, descomposición y modelado con comparación honesta contra un baseline*
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)](https://python.org)
 [![statsmodels](https://img.shields.io/badge/statsmodels-SARIMA-3776ab)](https://www.statsmodels.org)
@@ -17,17 +17,19 @@ baseline honesto.
 
 ---
 
-## Resultados (horizonte de test: 90 días)
+## Resultados (forecasting horario, test: 14 días = 336 h)
 
 | Modelo | MAE (MW) | RMSE (MW) | MAPE |
 |---|---|---|---|
-| Seasonal-Naive (baseline) | 4,028 | 5,178 | 12.5 % |
-| SARIMA | 7,569 | 9,297 | 21.2 % |
-| **Prophet** | **2,613** | **3,368** | **7.9 %** |
+| Seasonal-Naive (baseline) | 3,277 | 4,245 | 9.2 % |
+| SARIMAX + Fourier | 4,286 | 5,331 | 11.1 % |
+| Prophet | 3,532 | 4,238 | 10.9 % |
 
-> **Hallazgo clave:** solo **Prophet supera al baseline**. SARIMA (estacionalidad semanal sobre
-> 2 años) **queda por debajo del seasonal-naive** porque no captura el ciclo **anual** en un
-> horizonte de 90 días — la mejor demostración de por qué un baseline es obligatorio.
+> **Lectura honesta:** en horario, el **naive semanal** (copiar la semana anterior) es un baseline
+> durísimo a corto plazo. Prophet queda **a la par** (mejor RMSE) y **SARIMAX+Fourier ya es
+> competitivo** (~11%), muy lejos del 21% del v1.0.0 — antes a SARIMA le faltaba la estacionalidad
+> anual; con términos de Fourier la captura. Una sola ventana es ruidosa: el **backtesting
+> walk-forward** da la comparación robusta.
 
 ---
 
@@ -36,11 +38,12 @@ baseline honesto.
 1. **EDA temporal** (`01_EDA.ipynb`) — serie completa, estacionalidad (hora/día/mes), tendencia, ADF.
 2. **Descomposición** (`02_decomposition.ipynb`) — STL (tendencia+estacional+residuo), ADF +
    diferenciación, ACF/PACF, **split cronológico** (nunca aleatorio).
-3. **Modelado** (`03_modeling.ipynb`) — **baseline estacional-naive**, SARIMA y Prophet;
-   comparación MAE/RMSE/MAPE y **pronóstico a 30 días** del mejor modelo.
+3. **Modelado horario** (`03_modeling.ipynb`) — **baseline naive-semanal**, **SARIMAX + Fourier**
+   (estacionalidad múltiple como regresores) y **Prophet**; comparación MAE/RMSE/MAPE y
+   **pronóstico a 30 días** (720 h). El pipeline reproducible: `python -m src.pipeline`.
 
-> La Fase 4 (LSTM) del roadmap es opcional y se omite: Prophet + baseline ya constituyen un
-> pipeline de forecasting sólido y reproducible.
+> La Fase 4 (LSTM) del roadmap es opcional y se omite: baseline + SARIMAX + Prophet ya constituyen
+> un pipeline de forecasting sólido y reproducible.
 
 ---
 
@@ -57,15 +60,13 @@ semana) y anual (picos de verano e invierno por climatización).
 
 ```
 time-series-forecasting/
-├── data/                         # CSVs PJM (no versionado) + splits.pkl
-├── notebooks/
-│   ├── 01_EDA.ipynb
-│   ├── 02_decomposition.ipynb
-│   └── 03_modeling.ipynb
-├── reports/                      # 11 visualizaciones + metrics.json
-├── HALLAZGOS.md
-├── README.md
-└── ROADMAP.md
+├── config.yaml                   # serie, ventana, horizonte, Fourier, orden SARIMAX
+├── data/                         # CSVs PJM (no versionado)
+├── src/                          # data, features (Fourier), models, pipeline
+│   └── forecast_model.json       # modelo Prophet persistido (lo carga la API)
+├── notebooks/                    # 01_EDA, 02_decomposition, 03_modeling (importan src/)
+├── reports/                      # figuras + metrics.json + experiments.csv
+├── HALLAZGOS.md   README.md   ROADMAP.md
 ```
 
 ---
@@ -74,6 +75,11 @@ time-series-forecasting/
 
 ```bash
 pip install -r requirements.txt
+
+# Pipeline completo de una vez (serie -> baseline + SARIMAX + Prophet -> métricas + modelo)
+python -m src.pipeline
+
+# O los notebooks (narrativa) en orden
 jupyter nbconvert --to notebook --execute --inplace notebooks/01_EDA.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/02_decomposition.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/03_modeling.ipynb
