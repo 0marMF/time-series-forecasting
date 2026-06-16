@@ -1,0 +1,8 @@
+# Dependencias para desarrollo y CI: lo justo para correr el pipeline y los tests.
+# Prophet NO va aquí (es pesado de instalar en CI); los tests que lo usan se saltan con
+# importorskip. En local, instala todo con requirements.txt.
+pandas==2.2.2
+numpy==1.26.4
+statsmodels==0.14.5
+pyyaml==6.0.2
+pytest==8.3.5

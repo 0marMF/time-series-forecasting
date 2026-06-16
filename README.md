@@ -3,6 +3,7 @@
 > **Forecasting horario de demanda eléctrica: baseline, SARIMAX-Fourier y Prophet**
 > *EDA temporal, descomposición y modelado con comparación honesta contra un baseline*
 
+[![CI](https://github.com/0marMF/time-series-forecasting/actions/workflows/ci.yml/badge.svg)](https://github.com/0marMF/time-series-forecasting/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)](https://python.org)
 [![statsmodels](https://img.shields.io/badge/statsmodels-SARIMA-3776ab)](https://www.statsmodels.org)
 [![Prophet](https://img.shields.io/badge/Prophet-forecasting-209cee)](https://facebook.github.io/prophet/)
@@ -98,6 +99,7 @@ time-series-forecasting/
 ├── src/                          # data, features (Fourier), models, pipeline
 │   └── forecast_model.json       # modelo Prophet persistido (lo carga la API)
 ├── notebooks/                    # 01_EDA, 02_decomposition, 03_modeling, 04_backtesting (importan src/)
+├── tests/                        # pytest sobre serie sintética (no necesita el dataset real)
 ├── reports/                      # figuras + metrics.json + backtest_metrics.json + experiments.csv
 ├── HALLAZGOS.md   README.md   ROADMAP.md
 ```
@@ -116,6 +118,12 @@ python -m src.pipeline
 jupyter nbconvert --to notebook --execute --inplace notebooks/01_EDA.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/02_decomposition.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/03_modeling.ipynb
+```
+
+```bash
+# Tests (usan una serie sintética, no necesitan el dataset)
+pip install -r requirements-dev.txt
+pytest
 ```
 
 > Dataset: [Hourly Energy Consumption — Kaggle](https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption)

@@ -213,13 +213,13 @@ walk-forward hace la comparación honesta y la evaluación creíble.
 Un forecast de verdad no es un gráfico bonito de una sola vez: es algo que se re-entrena, se
 valida con el tiempo y se puede consultar. Eso es lo que falta para que sea un proyecto de DS.
 
-**Código modular → `src/`**
-- [ ] `src/data.py` (carga + resample + huecos), `src/features.py` (calendario, Fourier),
+**Código modular → `src/`** — hecho (CP1–CP2)
+- [x] `src/data.py` (carga + resample + huecos), `src/features.py` (calendario, Fourier),
       `src/models.py` (baseline, SARIMA/SARIMAX, Prophet), `src/backtest.py`.
-- [ ] `config.yaml` (serie, horizonte, órdenes) + `python -m src.pipeline`.
+- [x] `config.yaml` (serie, horizonte, órdenes) + `python -m src.pipeline`.
 
-**Backtesting como código (no un solo split)**
-- [ ] Framework **walk-forward** reutilizable que evalúa en varias ventanas y reporta media ± desv
+**Backtesting como código (no un solo split)** — hecho (CP3)
+- [x] Framework **walk-forward** reutilizable que evalúa en varias ventanas y reporta media ± desv
       de MAE/RMSE/MAPE. Es lo que da credibilidad real a un forecast.
 
 **Servir el pronóstico** — hecho (CP4)
@@ -228,10 +228,11 @@ valida con el tiempo y se puede consultar. Eso es lo que falta para que sea un p
 - [ ] Concepto de **re-entrenamiento programado** (GitHub Actions / cron) — pendiente (nota en CP6).
 
 **Monitoreo y documentación**
-- [ ] Seguir el **error de pronóstico en el tiempo** (si se dispara, el modelo se quedó viejo).
-- [ ] Tests: continuidad temporal, sin fugas de futuro en el split, formato del output.
-- [ ] Model card con supuestos (estacionalidad), límites y cuándo NO confiar en el forecast.
-- [ ] CI con `pytest`.
+- [ ] Seguir el **error de pronóstico en el tiempo** (si se dispara, el modelo se quedó viejo) — nota en CP6.
+- [x] Tests (CP5): split cronológico sin fugas de futuro, Fourier (forma + fase), métricas, baseline,
+      SARIMAX y walk-forward (con stubs). Sobre serie sintética: no necesitan el dataset real.
+- [ ] Model card con supuestos (estacionalidad), límites y cuándo NO confiar en el forecast — CP6.
+- [x] CI con `pytest` (CP5) — GitHub Actions en cada push/PR; Prophet se omite en CI (pesado) y sus tests se saltan.
 
 > **Estilo:** docs y comentarios humanos. Explicar *por qué* este orden de ARIMA, *por qué*
 > diario y no horario, qué se intentó y qué no funcionó — como lo contaría un analista a otro.
