@@ -101,6 +101,7 @@ time-series-forecasting/
 ├── notebooks/                    # 01_EDA, 02_decomposition, 03_modeling, 04_backtesting (importan src/)
 ├── tests/                        # pytest sobre serie sintética (no necesita el dataset real)
 ├── reports/                      # figuras + metrics.json + backtest_metrics.json + experiments.csv
+├── MODEL_CARD.md                 # supuestos, límites y cuándo NO confiar en el forecast
 ├── HALLAZGOS.md   README.md   ROADMAP.md
 ```
 
@@ -130,6 +131,7 @@ pytest
 > (serie `PJME_hourly.csv`; no se versiona). En Windows, Prophet requiere `pip install prophet`.
 
 > Detalle de detecciones y aprendizajes en [`HALLAZGOS.md`](HALLAZGOS.md).
+> Supuestos, límites y cuándo NO confiar en el forecast en [`MODEL_CARD.md`](MODEL_CARD.md).
 
 ---
 

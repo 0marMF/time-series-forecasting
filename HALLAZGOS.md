@@ -2,16 +2,20 @@
 
 > Detecciones del análisis temporal y del forecasting, más los aprendizajes del proyecto.
 
-**Autor:** Omar Mora Flores · **Última actualización:** 2026-06-06
+**Autor:** Omar Mora Flores · **Última actualización:** 2026-06-16
 
 ---
 
 ## 🧭 Resumen ejecutivo
 
-Sobre **16.6 años** de demanda eléctrica horaria de PJM East, **Prophet** pronostica a 90 días
-con **MAPE 7.9%**, superando claramente al baseline estacional-naive (12.5%). El aprendizaje
-metodológico central: **sin un baseline no se puede juzgar un modelo** — SARIMA, pese a su
-complejidad, quedó **por debajo** del baseline en este horizonte.
+Sobre **16.6 años** de demanda eléctrica horaria de PJM East, el modelo ganador es **Prophet**:
+en backtesting walk-forward (4 ventanas) logra **MAPE 13.0% ± 2.3**, batiendo al baseline
+seasonal-naive (13.9%) y al SARIMAX+Fourier (13.7%) sobre todo por su **menor varianza**. Dos
+aprendizajes centrales: **(1) sin baseline no se puede juzgar un modelo** —el naive semanal es
+durísimo a corto plazo— y **(2) un solo split engaña**: en la ventana única el naive parecía el
+mejor; el backtesting lo desmiente. El SARIMA del v1.0.0 quedaba por debajo del baseline, pero era
+una limitación del montaje (le faltaba la estacionalidad anual): con términos de Fourier pasa a
+ser competitivo.
 
 ---
 
@@ -85,9 +89,10 @@ Repitiendo la evaluación en **4 ventanas** y promediando, el ranking cambia res
 ## ⚠️ Limitaciones y próximos pasos
 
 - [x] **Backtesting / validación walk-forward** en varias ventanas (hecho: 4 ventanas, Prophet robusto).
-- [ ] SARIMA con estacionalidad anual (vía variables de Fourier o SARIMAX con exógenas) para una
-      comparación más justa frente a Prophet.
-- [ ] Incorporar **variables exógenas** (temperatura, festivos) — principal driver de la demanda.
+- [x] **SARIMA con estacionalidad anual** vía términos de Fourier — hecho: pasa de ~21% a ~11% en
+      la ventana única y queda a la par del baseline en backtest. Comparación por fin justa.
+- [ ] Incorporar **variables exógenas** (temperatura, festivos) — el principal driver real de la
+      demanda y la mejora con más techo (ver `MODEL_CARD.md`).
 - [ ] Probar la **Fase 4 opcional (LSTM)** y comparar contra Prophet.
 
 ---

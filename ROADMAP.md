@@ -21,35 +21,33 @@
 
 Leyenda: Pendiente · En progreso · Completado
 
-> **v1.0.0 completo.** Ver abajo **Mejoras planificadas (v1.1)** — SARIMA quedó por debajo del
-> baseline por una limitación nuestra (faltó estacionalidad anual), y falta evaluación robusta.
+> **v1.0.0 completo** (análisis + modelado en notebooks). **v1.1.0** lo reconvierte en un proyecto
+> de Ciencia de Datos (código modular, backtesting, serving, tests, CI, model card) — detalle abajo.
 
 ---
 
-## Mejoras planificadas (v1.1) — auditoría 2026-06-06
+## v1.1.0 — Rework a proyecto de Ciencia de Datos (completado)
 
-### P1 — Comparación justa para SARIMA (estacionalidad anual)
-SARIMA usó solo estacionalidad semanal (m=7) → no captura el ciclo anual y quedó **peor que el
-baseline**. Es una limitación del montaje, no del método.
-- [ ] **SARIMAX con términos de Fourier** para la estacionalidad anual; recomparar vs Prophet/baseline
-- [ ] Reflejar la comparación corregida en `metrics.json` y `09_model_comparison.png`
+> Origen: auditoría de calidad (2026-06-06). El v1.0.0 tenía dos deudas reales — SARIMA quedó
+> **por debajo del baseline** por una limitación del montaje (solo estacionalidad semanal, sin la
+> anual) y la evaluación era un **único split** (frágil). El rework las salda y, de paso, lleva el
+> proyecto de "notebooks" a "código que se sirve y se prueba". Se hizo por checkpoints (CP):
 
-### P2 — Evaluación robusta y stretch
-- [ ] **Backtesting / walk-forward** en varias ventanas (hoy es un único test de 90 días)
-- [ ] (Stretch) Pronóstico de la **serie horaria** con su ciclo diario, no solo la diaria
+- [x] **CP1-CP2 — Código modular + comparación justa.** `src/` (`data`, `features`, `models`,
+      `pipeline`) + `config.yaml` + `python -m src.pipeline`. **SARIMAX con términos de Fourier**
+      (estacionalidad diaria/semanal/anual como regresores): pasa de ~21% MAPE (v1.0.0 diario) a
+      **~11%**, ya competitivo. Forecasting **horario**, no solo diario.
+- [x] **CP3 — Backtesting walk-forward.** 4 ventanas, media ± desviación. Prophet robusto
+      (MAPE 13.0% ± 2.3, menor varianza). El naive parecía el mejor en una sola ventana: el
+      backtesting lo desmiente — un solo split puede señalar al modelo equivocado.
+- [x] **CP4 — Serving.** CLI `python -m src.forecast --days N` y API FastAPI `GET /forecast?days=N`;
+      cargan el Prophet persistido (reentrenado con toda la ventana) sin reentrenar.
+- [x] **CP5 — Tests + CI.** `pytest` sobre serie sintética (sin depender del dataset) + GitHub
+      Actions en cada push/PR.
+- [x] **CP6 — Documentación.** `MODEL_CARD.md` (supuestos, límites, cuándo no confiar, nota de
+      monitoreo y reentrenamiento) + consolidación de este roadmap.
 
-**Por qué:** el roadmap compara modelos; darle a ARIMA su estacionalidad anual y validar con
-walk-forward hace la comparación honesta y la evaluación creíble.
-
----
-
-## Backlog de mejoras — v1.1.0 *(planificado, aún sin implementar)*
-
-> Derivado de la revisión de calidad (2026-06-06). SARIMA quedó infravalorado frente a Prophet.
-
-- [x] **SARIMAX + Fourier (estacionalidad múltiple)** — `src/models.py`; ya competitivo (~11% MAPE) en lugar del 21% del v1.0.0. Comparación justa.
-- [x] **Backtesting / validación walk-forward** (CP3) — 4 ventanas; Prophet robusto (MAPE 13.0% ± 2.3, menor varianza). El naive parecía mejor en una sola ventana: el backtesting lo desmiente.
-- [x] **Forecasting horario** (no solo diario) — pipeline y modelos ahora trabajan en horario.
+Detalle de cada componente del Track DS más abajo.
 
 ---
 
@@ -225,13 +223,16 @@ valida con el tiempo y se puede consultar. Eso es lo que falta para que sea un p
 **Servir el pronóstico** — hecho (CP4)
 - [x] CLI `python -m src.forecast --days N` y API FastAPI `GET /forecast?days=N` (`src/forecast.py`,
       `src/api.py`); cargan el Prophet persistido (entrenado con toda la ventana) sin reentrenar.
-- [ ] Concepto de **re-entrenamiento programado** (GitHub Actions / cron) — pendiente (nota en CP6).
+- [x] Concepto de **re-entrenamiento programado** (GitHub Actions / cron) — documentado en
+      `MODEL_CARD.md` (CP6): la ventana es móvil, `python -m src.pipeline` regenera el modelo.
 
 **Monitoreo y documentación**
-- [ ] Seguir el **error de pronóstico en el tiempo** (si se dispara, el modelo se quedó viejo) — nota en CP6.
+- [x] Seguir el **error de pronóstico en el tiempo** (si se dispara, el modelo se quedó viejo) —
+      documentado en `MODEL_CARD.md` (CP6); `reports/experiments.csv` registra cada corrida.
 - [x] Tests (CP5): split cronológico sin fugas de futuro, Fourier (forma + fase), métricas, baseline,
       SARIMAX y walk-forward (con stubs). Sobre serie sintética: no necesitan el dataset real.
-- [ ] Model card con supuestos (estacionalidad), límites y cuándo NO confiar en el forecast — CP6.
+- [x] **Model card** (`MODEL_CARD.md`, CP6) con supuestos (triple estacionalidad), límites
+      (sin exógenas, no anticipa shocks) y cuándo NO confiar en el forecast.
 - [x] CI con `pytest` (CP5) — GitHub Actions en cada push/PR; Prophet se omite en CI (pesado) y sus tests se saltan.
 
 > **Estilo:** docs y comentarios humanos. Explicar *por qué* este orden de ARIMA, *por qué*
