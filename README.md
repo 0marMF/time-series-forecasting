@@ -96,7 +96,7 @@ uvicorn src.api:app --reload            # API: GET /forecast?days=N  (docs en /d
 time-series-forecasting/
 ├── config.yaml                   # serie, ventana, horizonte, Fourier, orden SARIMAX
 ├── data/                         # CSVs PJM (no versionado)
-├── src/                          # data, features (Fourier), models, pipeline
+├── src/                          # data, features (Fourier), models, backtest, forecast, api, pipeline
 │   └── forecast_model.json       # modelo Prophet persistido (lo carga la API)
 ├── notebooks/                    # 01_EDA, 02_decomposition, 03_modeling, 04_backtesting (importan src/)
 ├── tests/                        # pytest sobre serie sintética (no necesita el dataset real)
@@ -132,6 +132,17 @@ pytest
 
 > Detalle de detecciones y aprendizajes en [`HALLAZGOS.md`](HALLAZGOS.md).
 > Supuestos, límites y cuándo NO confiar en el forecast en [`MODEL_CARD.md`](MODEL_CARD.md).
+
+---
+
+## Stack tecnológico
+
+- **Python 3.10+**, **Pandas & NumPy** — datos y series.
+- **statsmodels** — SARIMAX con términos de Fourier (estacionalidad múltiple).
+- **Prophet** — modelo con estacionalidad nativa (el que se sirve).
+- **Matplotlib & Seaborn** — visualización.
+- **FastAPI & Uvicorn** — API del pronóstico (`GET /forecast`).
+- **pytest & GitHub Actions** — tests (serie sintética) y CI.
 
 ---
 
